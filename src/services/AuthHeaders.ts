@@ -2,7 +2,7 @@ import {AxiosRequestHeaders} from "axios";
 
 export default function authHeader(): AxiosRequestHeaders {
   const userStr = localStorage.getItem("user");
-  let user = null;
+  let user: any = null;
   if (userStr)
     user = JSON.parse(userStr);
 
