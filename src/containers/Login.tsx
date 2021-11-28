@@ -1,32 +1,20 @@
 import React, { useState } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
 import {login} from "../services/AuthenticationService";
-import {IUser} from "../entities/User";
-import { useNavigate } from "react-router-dom";
-interface FormValues extends IUser{}
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import LoginForm from "./component/auth/LoginForm";
+import {Box, Container, Link, Stack, Typography} from "@mui/material";
+import AuthLayout from "../layouts/AuthLayout";
+import Hidden from "../layouts/Hidden";
+import {ContentStyle, RootStyle, SectionStyle} from "../layouts/ComponentStyle";
 
 const Login: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const navigate = useNavigate();
-
-  const initialValues: FormValues = {
-    email: "",
-    password: "",
-  };
-
-  const validationSchema = Yup.object().shape({
-    username: Yup.string().required("This field is required!"),
-    password: Yup.string().required("This field is required!"),
-  });
 
   const handleLogin = (formValue: { email: string; password: string }) => {
     const { email, password } = formValue;
 
     setMessage("");
-    setLoading(true);
-
     login(email, password).then(
       () => {
         navigate("/profile")
@@ -40,66 +28,42 @@ const Login: React.FC = () => {
           error.message ||
           error.toString();
 
-        setLoading(false);
         setMessage(resMessage);
       }
     );
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleLogin}
-        >
-          <Form>
-            <div className="form-group">
-              <label htmlFor="username">Email</label>
-              <Field name="email" type="text" className="form-control" />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="alert alert-danger"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <Field name="password" type="password" className="form-control" />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="alert alert-danger"
-              />
-            </div>
-
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
-            </div>
-
-            {message && (
-              <div className="form-group">
-                <div className="alert alert-danger" role="alert">
-                  {message}
-                </div>
-              </div>
-            )}
-          </Form>
-        </Formik>
-      </div>
-    </div>
+    <RootStyle>
+      <Box>
+          <title>Login to Admin</title>
+      </Box>
+      <AuthLayout>
+        Don’t have an account? &nbsp;
+        <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
+          Get started
+        </Link>
+      </AuthLayout>
+      <Hidden width="mdDown">
+        <SectionStyle>
+          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+            Hi, Welcome Back
+          </Typography>
+          <img src="/static/illustrations/illustration_login.png" alt="login" />
+        </SectionStyle>
+      </Hidden>
+      <Container maxWidth="sm">
+        <ContentStyle>
+          <Stack sx={{ mb: 5 }}>
+            <Typography variant="h4" gutterBottom>
+              Sign in to Admin
+            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>Enter your details below.</Typography>
+          </Stack>
+          <LoginForm login={handleLogin} message={message} />
+        </ContentStyle>
+      </Container>
+    </RootStyle>
   );
 };
 

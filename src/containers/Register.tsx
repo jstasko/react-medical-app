@@ -1,34 +1,16 @@
 import React, { useState } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
-
+import {Link as RouterLink } from "react-router-dom";
 import {IUser} from "../entities/User";
 import {register} from "../services/AuthenticationService";
+import RegisterForm from "./component/auth/RegisterForm";
+import {Box, Container, Link, Typography} from "@mui/material";
+import {ContentStyle, RootStyle, SectionStyle} from "../layouts/ComponentStyle";
+import AuthLayout from "../layouts/AuthLayout";
+import Hidden from "../layouts/Hidden";
 
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-
-  const initialValues: IUser = {
-    email: "",
-    password: "",
-  };
-
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("This is not a valid email.")
-      .required("This field is required!"),
-    password: Yup.string()
-      .test(
-        "len",
-        "The password must be between 6 and 40 characters.",
-        (val: any) =>
-          val &&
-          val.toString().length >= 6 &&
-          val.toString().length <= 40
-      )
-      .required("This field is required!"),
-  });
 
   const handleRegister = (formValue: IUser) => {
     const { email, password } = formValue;
@@ -53,67 +35,63 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="col-md-12">
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleRegister}
-        >
-          <Form>
-            {!successful && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="email"> Email </label>
-                  <Field name="email" type="email" className="form-control" />
-                  <ErrorMessage
-                    name="email"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
+    <RootStyle>
+      <Box>
+        <title>Sign Up To Admin</title>
+      </Box>
 
-                <div className="form-group">
-                  <label htmlFor="password"> Password </label>
-                  <Field
-                    name="password"
-                    type="password"
-                    className="form-control"
-                  />
-                  <ErrorMessage
-                    name="password"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
+      <AuthLayout>
+        Already have an account? &nbsp;
+        <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+          Login
+        </Link>
+      </AuthLayout>
 
-                <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                </div>
-              </div>
-            )}
+      <Hidden width="mdDown">
+        <SectionStyle>
+          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+            Manage the job more effectively with Admin
+          </Typography>
+          <img alt="register" src="/static/illustrations/illustration_register.png" />
+        </SectionStyle>
+      </Hidden>
 
-            {message && (
-              <div className="form-group">
-                <div
-                  className={
-                    successful ? "alert alert-success" : "alert alert-danger"
-                  }
-                  role="alert"
-                >
-                  {message}
-                </div>
-              </div>
-            )}
-          </Form>
-        </Formik>
-      </div>
-    </div>
+      <Container>
+        <ContentStyle>
+          <Box sx={{ mb: 5 }}>
+            <Typography variant="h4" gutterBottom>
+              Get started absolutely free.
+            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>
+              Free forever. No credit card needed.
+            </Typography>
+          </Box>
+
+          <RegisterForm handleRegister={handleRegister} message={message} successful={successful} />
+
+          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+            By registering, I agree to Minimal&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Terms of Service
+            </Link>
+            &nbsp;and&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              Privacy Policy
+            </Link>
+            .
+          </Typography>
+
+          <Hidden width="smUp">
+            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
+              Already have an account?&nbsp;
+              <Link to="/login" component={RouterLink}>
+                Login
+              </Link>
+            </Typography>
+          </Hidden>
+        </ContentStyle>
+      </Container>
+    </RootStyle>
   );
 };
 
