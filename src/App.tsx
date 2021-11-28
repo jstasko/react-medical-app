@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+import {IUser} from "./entities/User";
+import * as AuthService from "./services/AuthenticationService";
+import EventBus from "./common/EventBus";
+import ThemeConfig from "./theme";
+import ScrollToTop from "./containers/component/ScrollToTop";
+import GlobalStyles from "./theme/globalStyles";
+import Router from "./routes";
 
-function App() {
+const App: React.FC = () => {
+  const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
+
+  useEffect(() => {
+    const user = AuthService.getCurrentUser();
+
+    if (user) {
+      setCurrentUser(user);
+    }
+
+    EventBus.on("logout", logOut);
+
+    return () => {
+      EventBus.remove("logout", logOut);
+    };
+  }, []);
+
+  const logOut = () => {
+    AuthService.logout();
+    setCurrentUser(undefined);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeConfig>
+      <ScrollToTop />
+      <GlobalStyles />
+      <Router />
+    </ThemeConfig>
   );
-}
+};
 
 export default App;
