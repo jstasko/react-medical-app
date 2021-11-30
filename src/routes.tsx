@@ -5,6 +5,7 @@ import Profile from "./containers/Profile";
 import Page404 from "./containers/Page404";
 import DashboardMain from "./containers/dasboard/DashboardMain";
 import Dashboard from "./containers/dasboard/Dashboard";
+import Players from "./containers/Players";
 
 export default function Router() {
   return useRoutes([
@@ -14,6 +15,7 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" replace /> },
         { path: 'app', element: <Dashboard /> },
         { path: 'profile', element: <Profile /> },
+        { path: 'players', element: <Players />}
       ]
     },
     {path: '/', element: <Navigate to="/dashboard" />},
