@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Link as RouterLink } from "react-router-dom";
+import {Link as RouterLink, useNavigate} from "react-router-dom";
 import {IUser} from "../entities/User";
 import {register} from "../services/AuthenticationService";
 import RegisterForm from "./component/auth/RegisterForm";
@@ -11,6 +11,7 @@ import Hidden from "../layouts/Hidden";
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const navigate = useNavigate();
 
   const handleRegister = (formValue: IUser) => {
     const { email, password } = formValue;
@@ -19,6 +20,9 @@ const Register: React.FC = () => {
       () => {
         setMessage('Success');
         setSuccessful(true);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500)
       },
       (error) => {
         console.log(error.response.data.message);

@@ -7,7 +7,10 @@ export default function authHeader(): AxiosRequestHeaders {
     user = JSON.parse(userStr);
 
   if (user && user.accessToken) {
-    return { Authorization: 'Bearer ' + user.accessToken };
+    return {
+      Authorization: 'Bearer ' + user.accessToken,
+      "Access-Control-Allow-Origin": "*"
+    };
   } else {
     return {};
   }

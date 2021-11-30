@@ -65,9 +65,13 @@ const DashboardSideBar: React.FC<{ isOpenSidebar, onCloseSidebar }> = ({ isOpenS
 
   const getBlob = async (user) => {
     const data = await getUser(user.email);
-    const image = await getImage(data.data.avatar.fileDownloadUri)
-    setPreview(`data:${image.headers['content-type']};base64,${image.data}`)
+    if (data.data.avatar && data.data.avatar.fileDownloadUri) {
+      const image = await getImage(data.data.avatar.fileDownloadUri)
+      setPreview(`data:${image.headers['content-type']};base64,${image.data}`)
+    }
   }
+
+  const isCorrectUrl = window.location.pathname !== '/dashboard/profile'
 
   const renderContent = (
     <Scrollbar
@@ -87,7 +91,10 @@ const DashboardSideBar: React.FC<{ isOpenSidebar, onCloseSidebar }> = ({ isOpenS
           <Box sx={{ mb: 5, mx: 2.5 }}>
             <Link underline="none" component={RouterLink} to="#">
               <AccountStyle>
-                <Avatar src={preview} alt="photoURL" />
+                {
+                  isCorrectUrl &&
+                  (<Avatar src={preview} alt="photoURL" />)
+                }
                 <Box sx={{ ml: 2 }}>
                   <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                     {currentUser.email}

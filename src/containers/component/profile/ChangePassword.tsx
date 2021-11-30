@@ -1,14 +1,18 @@
 import React from "react";
-import {Box, Card, CardHeader, Stack, TextField} from "@mui/material";
+import {Box, Card, CardHeader, IconButton, InputAdornment, Stack, TextField} from "@mui/material";
 import {Form, FormikProvider, useFormik} from "formik";
 import {LoadingButton} from "@mui/lab";
 import * as Yup from "yup";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 interface IChangePassword {
-
+  changePassword: (newPassword: string) => void;
 }
 
 const ChangePassword: React.FC<IChangePassword> = (props:IChangePassword) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const PasswordSchema = Yup.object().shape({
     password: Yup.string()
       .test(
@@ -19,24 +23,15 @@ const ChangePassword: React.FC<IChangePassword> = (props:IChangePassword) => {
           val.toString().length >= 6 &&
           val.toString().length <= 40
       ),
-    confirmPassword: Yup.string()
-      .test(
-        "len",
-        "The password must be between 6 and 40 characters.",
-        (val: any) =>
-          val &&
-          val.toString().length >= 6 &&
-          val.toString().length <= 40
-      ).oneOf([Yup.ref('password'), null], 'Passwords must match')
   });
 
   const formik = useFormik({
     initialValues: {
       password: '',
-      confirmPassword: ''
     },
     validationSchema: PasswordSchema,
-    onSubmit: (values: { password: string, confirmPassword: string }, formikHelpers) => {
+    onSubmit: (values: { password: string}, formikHelpers) => {
+      props.changePassword(values.password);
       formikHelpers.setSubmitting(false);
     }
   });
@@ -53,21 +48,20 @@ const ChangePassword: React.FC<IChangePassword> = (props:IChangePassword) => {
               <TextField
                 fullWidth
                 autoComplete="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 label="Password"
                 {...getFieldProps('password')}
-                error={Boolean(touched.confirmPassword && errors.confirmPassword)}
-                helperText={touched.confirmPassword && errors.confirmPassword}
-              />
-
-              <TextField
-                fullWidth
-                autoComplete="Confirm password"
-                type="Confirm Password"
-                label="Confirm Password"
-                {...getFieldProps('ConfirmPassword')}
-                error={Boolean(touched.confirmPassword && errors.confirmPassword)}
-                helperText={touched.confirmPassword && errors.confirmPassword}
+                error={Boolean(touched.password && errors.password)}
+                helperText={touched.password && errors.password}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
+                        {showPassword ? <VisibilityIcon/> : <VisibilityOffIcon/>}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }}
               />
             </Stack>
 
