@@ -10,8 +10,10 @@ import {IUser} from "../../entities/User";
 import Logo from "../component/Logo";
 import NavItem from "../component/NavItem";
 import {sidebarConfig, sidebarConfigLogIn} from "./SideConfig";
+import {getUser} from "../../services/UserService";
+import {getImage} from "../../services/FileMediaService";
 
-const DRAWER_WIDTH = 280;
+const DRAWER_WIDTH = 350;
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
@@ -30,6 +32,7 @@ const AccountStyle = styled('div')(({ theme }) => ({
 
 const DashboardSideBar: React.FC<{ isOpenSidebar, onCloseSidebar }> = ({ isOpenSidebar, onCloseSidebar }) => {
   const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
+  const [preview, setPreview] = useState<string>("");
   const { pathname } = useLocation();
   const match = (path) => (path ? !!matchPath({ path, end: false }, pathname) : false);
 
@@ -50,6 +53,7 @@ const DashboardSideBar: React.FC<{ isOpenSidebar, onCloseSidebar }> = ({ isOpenS
 
     if (user) {
       setCurrentUser(user);
+      getBlob(user);
     }
 
     EventBus.on("logout", logOut);
@@ -58,6 +62,12 @@ const DashboardSideBar: React.FC<{ isOpenSidebar, onCloseSidebar }> = ({ isOpenS
       EventBus.remove("logout", logOut);
     };
   }, []);
+
+  const getBlob = async (user) => {
+    const data = await getUser(user.email);
+    const image = await getImage(data.data.avatar.fileDownloadUri)
+    setPreview(`data:${image.headers['content-type']};base64,${image.data}`)
+  }
 
   const renderContent = (
     <Scrollbar
@@ -77,7 +87,7 @@ const DashboardSideBar: React.FC<{ isOpenSidebar, onCloseSidebar }> = ({ isOpenS
           <Box sx={{ mb: 5, mx: 2.5 }}>
             <Link underline="none" component={RouterLink} to="#">
               <AccountStyle>
-                <Avatar src="" alt="photoURL" />
+                <Avatar src={preview} alt="photoURL" />
                 <Box sx={{ ml: 2 }}>
                   <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
                     {currentUser.email}

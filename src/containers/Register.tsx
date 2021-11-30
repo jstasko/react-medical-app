@@ -16,19 +16,14 @@ const Register: React.FC = () => {
     const { email, password } = formValue;
 
     register(email, password).then(
-      (response) => {
-        setMessage(response.data.message);
+      () => {
+        setMessage('Success');
         setSuccessful(true);
       },
       (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
-        setMessage(resMessage);
+        console.log(error.response.data.message);
+        setMessage(error.response.data.message || "Prepacte mame problemy");
+        setTimeout(() => { setMessage("") }, 2000)
         setSuccessful(false);
       }
     );

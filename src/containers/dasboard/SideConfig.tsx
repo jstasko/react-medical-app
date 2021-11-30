@@ -26,8 +26,8 @@ export const sidebarConfig = [
 
 export const sidebarConfigLogIn = [
   {
-    title: 'user',
-    path: '/profile',
+    title: 'profile',
+    path: '/dashboard/profile',
     icon: getIcon(PeopleIcon),
     action: null
   },

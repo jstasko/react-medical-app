@@ -17,18 +17,12 @@ const Login: React.FC = () => {
     setMessage("");
     login(email, password).then(
       () => {
-        navigate("/profile")
-        window.location.reload();
+        navigate("/dashboard")
       },
       (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-
+        const resMessage = error && error.response  ? error.response.data : 'Prepacte mame problemy';
         setMessage(resMessage);
+        setTimeout(() => { setMessage("") }, 2000)
       }
     );
   };
