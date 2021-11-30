@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import {Form, FormikProvider, useFormik} from "formik";
 import * as Yup from "yup";
 import {IUser} from "../../../entities/User";
@@ -6,8 +6,10 @@ import {IconButton, InputAdornment, Stack, TextField} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {LoadingButton} from "@mui/lab";
+import {useNavigate} from "react-router-dom";
 
-interface RegisterFormValues extends IUser{}
+interface RegisterFormValues extends IUser {
+}
 
 interface IRegisterForm {
   handleRegister: (formValue: { email: string; password: string }) => void;
@@ -17,6 +19,7 @@ interface IRegisterForm {
 
 const RegisterForm: React.FC<IRegisterForm> = (props: IRegisterForm) => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
 
   const initialValues: RegisterFormValues = {
     email: "",
@@ -42,18 +45,22 @@ const RegisterForm: React.FC<IRegisterForm> = (props: IRegisterForm) => {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values: { email: string; password: string }) => {
+    onSubmit: (values: { email: string; password: string }, formikHelpers) => {
       props.handleRegister(values);
+      formikHelpers.setSubmitting(false);
+      setTimeout(() => {
+        navigate("/login");
+      }, 1500)
     }
   });
 
-  const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const {errors, touched, handleSubmit, isSubmitting, getFieldProps} = formik;
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Stack spacing={3}>
-        {!props.successful && (
+
           <>
             <TextField
               fullWidth
@@ -75,7 +82,7 @@ const RegisterForm: React.FC<IRegisterForm> = (props: IRegisterForm) => {
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton edge="end" onClick={() => setShowPassword((prev) => !prev)}>
-                      {showPassword ? <VisibilityIcon/> : <VisibilityOffIcon />}
+                      {showPassword ? <VisibilityIcon/> : <VisibilityOffIcon/>}
                     </IconButton>
                   </InputAdornment>
                 )
@@ -94,20 +101,19 @@ const RegisterForm: React.FC<IRegisterForm> = (props: IRegisterForm) => {
               Register
             </LoadingButton>
           </>
-        )}
 
-        {props.message && (
-          <div className="form-group">
-            <div
-              className={
-                props.successful ? "alert alert-success" : "alert alert-danger"
-              }
-              role="alert"
-            >
-              {props.message}
+          {props.message && (
+            <div className="form-group">
+              <div
+                className={
+                  props.successful ? "alert alert-success" : "alert alert-danger"
+                }
+                role="alert"
+              >
+                {props.message}
+              </div>
             </div>
-          </div>
-        )}
+          )}
         </Stack>
       </Form>
     </FormikProvider>

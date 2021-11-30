@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import DashboardSideBar from "./DashboardSideBar";
-import Dashboard from './Dashboard';
+import { Outlet } from 'react-router-dom';
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
@@ -34,7 +34,7 @@ const DashboardMain: React.FC = () => {
     <RootStyle>
       <DashboardSideBar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
       <MainStyle>
-        <Dashboard/>
+        <Outlet/>
       </MainStyle>
     </RootStyle>
   );

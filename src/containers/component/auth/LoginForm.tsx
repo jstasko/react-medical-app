@@ -1,13 +1,10 @@
 import React  from "react";
-import {Formik, Field, Form, ErrorMessage, FormikProvider, useFormik} from "formik";
+import {Form, FormikHelpers, FormikProvider, FormikValues, useFormik} from "formik";
 import * as Yup from "yup";
-import {IUser} from "../../../entities/User";
 import {IconButton, InputAdornment, Stack, TextField} from "@mui/material";
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {LoadingButton} from "@mui/lab";
-
-interface FormValues extends IUser{}
 
 interface ILoginForm {
   login: (formValue: { email: string; password: string }) => void;
@@ -26,14 +23,14 @@ const LoginForm: React.FC<ILoginForm> = (props: ILoginForm) => {
     initialValues: {
       email: '',
       password: '',
-      remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: (values: { email: string; password: string }) => {
+    onSubmit: (values: { email: string; password: string }, formikHelpers) => {
       props.login(values);
+      formikHelpers.setSubmitting(false);
     }
   });
-  const { errors, touched, values, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
 
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
@@ -85,6 +82,9 @@ const LoginForm: React.FC<ILoginForm> = (props: ILoginForm) => {
         >
           Login
         </LoadingButton>
+
+        <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+        </Stack>
 
         {props.message && (
           <div className="form-group">
