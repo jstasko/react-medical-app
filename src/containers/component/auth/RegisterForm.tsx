@@ -48,9 +48,6 @@ const RegisterForm: React.FC<IRegisterForm> = (props: IRegisterForm) => {
     onSubmit: (values: { email: string; password: string }, formikHelpers) => {
       props.handleRegister(values);
       formikHelpers.setSubmitting(false);
-      setTimeout(() => {
-        navigate("/login");
-      }, 1500)
     }
   });
 

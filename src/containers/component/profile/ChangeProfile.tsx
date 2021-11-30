@@ -29,11 +29,12 @@ const ChangeProfile: React.FC<IChangeProfile> = (props:IChangeProfile) => {
 
   return (
     <Card>
-      <CardHeader title="Email" subheader="Change you email" />
+      <CardHeader title="Email" />
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
         <FormikProvider value={formik}>
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <TextField
+              disabled
               fullWidth
               autoComplete="email"
               type="email"
@@ -42,20 +43,6 @@ const ChangeProfile: React.FC<IChangeProfile> = (props:IChangeProfile) => {
               error={Boolean(touched.email && errors.email)}
               helperText={touched.email && errors.email}
             />
-
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-            </Stack>
-
-            <LoadingButton
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              Change Email
-            </LoadingButton>
-
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
             </Stack>
           </Form>
