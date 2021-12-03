@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import {IUser} from "./entities/User";
-import * as AuthService from "./services/AuthenticationService";
+import * as AuthService from "./services/auth/AuthenticationService";
 import EventBus from "./common/EventBus";
 import ThemeConfig from "./theme";
 import ScrollToTop from "./containers/component/ScrollToTop";

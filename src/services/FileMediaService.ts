@@ -1,6 +1,6 @@
 import axios from "axios";
-import authHeader from "./AuthHeaders";
-import {getCurrentUser} from "./AuthenticationService";
+import authHeader from "./auth/AuthHeaders";
+import {getCurrentUser} from "./auth/AuthenticationService";
 
 const API_URL = "http://localhost:8069/api/files/";
 
@@ -21,4 +21,8 @@ export const uploadImage = (file, onUploadProgress) => {
     },
     onUploadProgress
   })
+}
+
+export const getJSONPlayer = (id) => {
+  return axios.get(API_URL + `json/generated/gen_js_json/${id}`, {headers: authHeader()})
 }

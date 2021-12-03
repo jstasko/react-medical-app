@@ -4,7 +4,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import GroupsIcon from '@mui/icons-material/Groups';
 import { Icon } from '@mui/material';
-import {logout} from "../../services/AuthenticationService";
+import {logout} from "../../services/auth/AuthenticationService";
 
 // ----------------------------------------------------------------------
 

@@ -9,11 +9,10 @@ import {
   Typography
 } from "@mui/material";
 import Image, {IImage} from "../Image";
-import {uploadImage} from "../../../services/FileMediaService";
 import {styled} from "@material-ui/core";
-import {updateAvatar} from "../../../services/UserService";
+import {updateAvatar} from "../../../services/auth/UserService";
 
-const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+const BorderLinearProgress = styled(LinearProgress)(() => ({
   root: {
     height: 15,
     borderRadius: 5,
@@ -42,7 +41,6 @@ const ImageCard: React.FC<ICard> = (props: ICard) => {
   const selectFile = (event) => {
     setCurrentFile(event.target.files[0])
   }
-
   const upload = () => {
     setProgress(0);
 

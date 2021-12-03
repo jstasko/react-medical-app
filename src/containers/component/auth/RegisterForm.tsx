@@ -6,7 +6,6 @@ import {IconButton, InputAdornment, Stack, TextField} from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {LoadingButton} from "@mui/lab";
-import {useNavigate} from "react-router-dom";
 
 interface RegisterFormValues extends IUser {
 }
@@ -19,7 +18,6 @@ interface IRegisterForm {
 
 const RegisterForm: React.FC<IRegisterForm> = (props: IRegisterForm) => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const navigate = useNavigate();
 
   const initialValues: RegisterFormValues = {
     email: "",

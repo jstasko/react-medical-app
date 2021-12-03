@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Link as RouterLink, matchPath, useLocation} from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import {Box, Link, Drawer, Typography, List, Avatar, ListItemText} from '@mui/material';
+import {Box, Link, Drawer, Typography, List, Avatar} from '@mui/material';
 import Scrollbar from "../component/ScrollBar";
 import Hidden from '../../layouts/Hidden';
-import * as AuthService from "../../services/AuthenticationService";
+import * as AuthService from "../../services/auth/AuthenticationService";
 import EventBus from "../../common/EventBus";
 import {IUser} from "../../entities/User";
 import Logo from "../component/Logo";
 import NavItem from "../component/NavItem";
 import {sidebarConfig, sidebarConfigLogIn} from "./SideConfig";
-import {getUser} from "../../services/UserService";
+import {getUser} from "../../services/auth/UserService";
 import {getImage} from "../../services/FileMediaService";
 
 const DRAWER_WIDTH = 350;
