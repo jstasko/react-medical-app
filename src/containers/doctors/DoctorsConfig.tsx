@@ -15,7 +15,7 @@ export const head: ITableHead[] = [
 
 export const buttons: IButtonsArray[] = [
   {
-    title: 'Save',
+    title: 'Add',
     pathTo: '/profile',
     icon: getIcon(AddIcon)
   }

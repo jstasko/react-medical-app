@@ -8,9 +8,13 @@ interface IPlayersInfo {
   meno: string
   priezvisko: string
   rodCislo?: string;
+  typskupiny?: string;
+  rhFaktor?: string;
+  vyska?: string;
+  hmotnost?: string;
 }
 
-const PlayersInfo: React.FC<IPlayersInfo> = (props: IPlayersInfo) => {
+const EntityInfo: React.FC<IPlayersInfo> = (props: IPlayersInfo) => {
   const LoginSchema = Yup.object().shape({});
 
   const formik = useFormik({
@@ -18,6 +22,10 @@ const PlayersInfo: React.FC<IPlayersInfo> = (props: IPlayersInfo) => {
       rodCislo: props.rodCislo ?? '',
       meno: props.meno,
       priezvisko: props.priezvisko,
+      typskupiny: props.typskupiny,
+      rhFaktor: props.rhFaktor,
+      vyska: props.vyska,
+      hmotnost: props.hmotnost,
     },
     validationSchema: LoginSchema,
     onSubmit: () => {}
@@ -34,7 +42,7 @@ const PlayersInfo: React.FC<IPlayersInfo> = (props: IPlayersInfo) => {
           <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
             <Stack spacing={3}>
               <TextField
-                disabled={true}
+                disabled={false}
                 fullWidth
                 autoComplete="rodCislo"
                 type="text"
@@ -44,7 +52,7 @@ const PlayersInfo: React.FC<IPlayersInfo> = (props: IPlayersInfo) => {
                 helperText={touched.rodCislo && errors.rodCislo}
               />
               <TextField
-                disabled={true}
+                disabled={false}
                 fullWidth
                 autoComplete="meno"
                 type="text"
@@ -54,31 +62,56 @@ const PlayersInfo: React.FC<IPlayersInfo> = (props: IPlayersInfo) => {
                 helperText={touched.meno && errors.meno}
               />
               <TextField
-                disabled={true}
+                disabled={false}
                 fullWidth
                 autoComplete="priezvisko"
-                type="type"
+                type="text"
                 label="Priezvisko"
                 {...getFieldProps('priezvisko')}
                 error={Boolean(touched.priezvisko && errors.priezvisko)}
                 helperText={touched.priezvisko && errors.priezvisko}
               />
+              <TextField
+                disabled={false}
+                fullWidth
+                autoComplete="typskupiny"
+                type="text"
+                label="Typ skupiny"
+                {...getFieldProps('typskupiny')}
+                error={Boolean(touched.typskupiny && errors.typskupiny)}
+                helperText={touched.typskupiny && errors.typskupiny}
+              />
+              <TextField
+                disabled={false}
+                fullWidth
+                autoComplete="rhFaktor"
+                type="text"
+                label="RhFaktor"
+                {...getFieldProps('rhFaktor')}
+                error={Boolean(touched.rhFaktor && errors.rhFaktor)}
+                helperText={touched.rhFaktor && errors.rhFaktor}
+              />
+              <TextField
+                disabled={false}
+                fullWidth
+                autoComplete="vyska"
+                type="text"
+                label="Vyska - CM"
+                {...getFieldProps('vyska')}
+                error={Boolean(touched.vyska && errors.vyska)}
+                helperText={touched.vyska && errors.vyska}
+              />
+              <TextField
+                disabled={false}
+                fullWidth
+                autoComplete="hmotnost"
+                type="text"
+                label="Hmotnost - KG"
+                {...getFieldProps('hmotnost')}
+                error={Boolean(touched.hmotnost && errors.hmotnost)}
+                helperText={touched.hmotnost && errors.hmotnost}
+              />
             </Stack>
-
-            <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-            </Stack>
-
-            <LoadingButton
-              disabled={true}
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              loading={isSubmitting}
-            >
-              Save info
-            </LoadingButton>
-
             <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{my: 2}}>
             </Stack>
           </Form>
@@ -88,4 +121,4 @@ const PlayersInfo: React.FC<IPlayersInfo> = (props: IPlayersInfo) => {
   );
 }
 
-export default PlayersInfo
+export default EntityInfo

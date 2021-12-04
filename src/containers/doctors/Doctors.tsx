@@ -13,7 +13,7 @@ const Doctors: React.FC = () => {
       head={head}
       moreIcons={moreIcons}
       rowsPerPage={rowsPerPageOptions}
-      title={"Players"}
+      title={"Doctors"}
       images={true}
     />
   )

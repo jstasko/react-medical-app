@@ -1,8 +1,6 @@
 import React from "react";
 import {
-  Avatar,
   Card,
-  Stack,
   Table,
   TableBody,
   TableCell,
@@ -13,7 +11,9 @@ import {
 import MyListingHeader from "./ListingHeader";
 import {ITableHead} from "../../entities/TableHead";
 import ListingMoreMenu from "./ListingMoreMenu";
-import {getImage} from "../../services/FileMediaService";
+import ListingAvatar from "./ListingAvatar";
+import moment from "moment";
+import SelectForm from "../../containers/players/SelectForm";
 
 interface IListingBody {
   headLabel: ITableHead[];
@@ -27,6 +27,9 @@ interface IListingBody {
   getData: (page: number, size: number) => void;
   iconMore: (id: object|undefined) => any;
   images ?: boolean
+  options?: string[]
+  currentSelected ?: string
+  setCurrentSelected ?: (current: string) => void
 }
 
 const MyListingBody: React.FC<IListingBody> = (props: IListingBody) => {
@@ -48,16 +51,9 @@ const MyListingBody: React.FC<IListingBody> = (props: IListingBody) => {
     props.getData(0, parseInt(event.target.value));
   }
 
-  const getUrl = (url) => {
-    getImage(url)
-      .then((response) => {
-        return `data:${response.headers['content-type']};base64,${response.data}`
-      })
-      .catch((error) => {
-        return ''
-      })
-
-    return ''
+  const getDate = (value: string) => {
+    const d = moment(value, 'YYYY-MM-DD');
+    return d.date() + '/' + d.month() + '/' + d.year()
   }
 
   const emptyRows = props.page > 0 ? Math.max(0, (1 + props.page) * props.rowsPerPage - props.totalRows) : 0;
@@ -70,7 +66,13 @@ const MyListingBody: React.FC<IListingBody> = (props: IListingBody) => {
             onRequestSort={handleRequestSort}
             orderBy={orderBy}
             order={order}
+            images={props.images}
           />
+          {
+            props.options &&
+            props.options.length !== 0 &&
+            (<SelectForm options={props.options} current={props.currentSelected} setCurrent={props.setCurrentSelected}/>)
+          }
           <TableBody>
             {props.entities
               .map((row, index) => {
@@ -83,16 +85,14 @@ const MyListingBody: React.FC<IListingBody> = (props: IListingBody) => {
                     <TableCell align="left">{index}</TableCell>
                     {
                       props.images && (
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={'avatar'} src={getUrl(row.download)} />
-                          </Stack>
-                        </TableCell>
+                        <ListingAvatar url={row.image} />
                       )
                     }
                     {props.headLabel.map((label: ITableHead) => {
                       return (
-                        <TableCell key={label.id} align="left">{row[label.id]}</TableCell>
+                        <TableCell key={label.id} align="left">
+                          {label.isDate ? getDate(row[label.id]) : row[label.id]}
+                        </TableCell>
                       )
                     })}
                     {

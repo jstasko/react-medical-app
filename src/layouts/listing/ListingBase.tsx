@@ -16,6 +16,9 @@ interface IListingBase {
   buttons: IButtonsArray[];
   title: string;
   images?: boolean
+  options?: string[]
+  setCurrent?: (s: any) => void;
+  current?: string;
 }
 
 const ListingBase: React.FC<IListingBase> = (props: IListingBase) => {
@@ -27,10 +30,8 @@ const ListingBase: React.FC<IListingBase> = (props: IListingBase) => {
   const [loading, setLoading] = React.useState<boolean>(false);
 
   useEffect(() => {
-    if (datas.length === 0) {
       getData(0, rowsPerPageOptions[0]);
-    }
-  }, []);
+  }, [props.current]);
 
   const getData = async (page, size) => {
     setLoading(true);
@@ -62,6 +63,9 @@ const ListingBase: React.FC<IListingBase> = (props: IListingBase) => {
             getData={getData}
             iconMore={props.moreIcons}
             images={props.images}
+            currentSelected={props.current}
+            setCurrentSelected={props.setCurrent}
+            options={props.options}
           />
         )
       }

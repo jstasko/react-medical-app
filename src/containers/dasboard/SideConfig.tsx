@@ -5,6 +5,11 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import GroupsIcon from '@mui/icons-material/Groups';
 import { Icon } from '@mui/material';
 import {logout} from "../../services/auth/AuthenticationService";
+import MasksIcon from '@mui/icons-material/Masks';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 // ----------------------------------------------------------------------
 
@@ -27,15 +32,45 @@ export const sidebarConfig = [
 
 export const sidebarConfigLogIn = [
   {
-    title: 'profile',
+    title: 'Profil',
     path: '/dashboard/profile',
     icon: getIcon(PeopleIcon),
     action: null
   },
   {
-    title: 'players',
+    title: 'Doktory',
+    path: '/dashboard/doctors',
+    icon: getIcon(MasksIcon),
+    action: null
+  },
+  {
+    title: 'Hraci',
     path: '/dashboard/players',
     icon: getIcon(GroupsIcon),
+    action: null
+  },
+  {
+    title: 'Zdravotne prehliadky',
+    path: '/dashboard/records',
+    icon: getIcon(ReceiptLongIcon),
+    action: null
+  },
+  {
+    title: 'Specializovane nemocnice',
+    path: '/dashboard/specializations',
+    icon: getIcon(LocalHospitalIcon),
+    action: null
+  },
+  {
+    title: 'Zdravotne karty',
+    path: '/dashboard/cards',
+    icon: getIcon(RecentActorsIcon),
+    action: null
+  },
+  {
+    title: 'Najlepsie lekarne',
+    path: '/dashboard/aphotecary',
+    icon: getIcon(AddShoppingCartIcon),
     action: null
   },
   {

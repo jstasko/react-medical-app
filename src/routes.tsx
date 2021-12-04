@@ -11,6 +11,12 @@ import PlayersSickness from "./containers/players/sickness/PlayersSickness";
 import PlayersMedication from "./containers/players/medication/PlayersMedication";
 import PlayerEdit from "./containers/players/PlayerEdit";
 import PlayersJson from "./containers/players/PlayersJson";
+import Doctors from "./containers/doctors/Doctors";
+import Records from "./containers/records/Records";
+import Specializations from "./containers/specializations/Specializations";
+import Cards from "./containers/cards/Cards";
+import Count from "./containers/players/Count";
+import Aphotecaries from "./containers/aphotecary/Aphotecaries";
 
 export default function Router() {
   return useRoutes([
@@ -21,11 +27,17 @@ export default function Router() {
         { path: 'app', element: <Dashboard /> },
         { path: 'profile', element: <Profile /> },
         { path: 'players', element: <Players />},
+        { path: 'players/count', element: <Count />},
         { path: 'players/:id/operations', element: <PlayersOperations /> },
         { path: 'players/:id/sickness', element: <PlayersSickness /> },
         { path: 'players/:id/medications', element: <PlayersMedication /> },
         { path: 'players/:id/edit', element: <PlayerEdit /> },
         { path: 'players/:id/json', element: <PlayersJson /> },
+        { path: 'doctors', element: <Doctors /> },
+        { path: 'records', element: <Records /> },
+        { path: 'specializations', element: <Specializations /> },
+        { path: 'cards', element: <Cards /> },
+        { path: 'aphotecary', element: <Aphotecaries /> },
       ]
     },
     {path: '/', element: <Navigate to="/dashboard" />},

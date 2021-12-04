@@ -5,6 +5,10 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import SickIcon from '@mui/icons-material/Sick';
 import MedicationIcon from "@mui/icons-material/Medication";
 import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import PeopleIcon from "@mui/icons-material/People";
+import {Icon} from "@mui/material";
+
+const getIcon = (name) => <Icon component={name} width={22} height={22} />;
 
 export const head: ITableHead[] = [
   {id: 'id', label: 'ID', alignRight: false},
@@ -13,7 +17,13 @@ export const head: ITableHead[] = [
   {id: 'rodCislo', label: 'Rodne Cislo', alignRight: false},
 ];
 
-export const buttons: IButtonsArray[] = []
+export const buttons: IButtonsArray[] = [
+  {
+    pathTo: "/dashboard/players/count",
+    title: "Pocet v okresoch",
+    icon: getIcon(PeopleIcon),
+  }
+]
 
 export const moreIcons = (entity:object|undefined) => {
   if (entity) {

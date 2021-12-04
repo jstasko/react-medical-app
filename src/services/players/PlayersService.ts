@@ -8,7 +8,17 @@ export const getPlayers = (page, size) => {
 };
 
 export const getPlayer = (id) => {
-  return axios.get(API_URL + `/rodCislo/${id}`, {headers: authHeader()})
+  return axios.post(`http://localhost:8069/api/statistics/players?size=1&page=0`,
+    { id: id },
+    {headers: authHeader()}
+    )
+}
+
+export const getCount = (nazov, page, size) => {
+  return axios.post(`http://localhost:8069/api/statistics/kraj?size=${size}&page=${page}`,
+    {kraj: nazov},
+    {headers: authHeader()}
+  )
 }
 
 export const updatePlayer = (id, data) => {
