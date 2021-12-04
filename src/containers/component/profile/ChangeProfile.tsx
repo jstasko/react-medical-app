@@ -1,9 +1,8 @@
 import React from "react";
 import {Box, Card, CardHeader, Stack, TextField} from "@mui/material";
 import {Form, FormikProvider, useFormik} from "formik";
-import {LoadingButton} from "@mui/lab";
 import * as Yup from "yup";
-import {getCurrentUser} from "../../../services/AuthenticationService";
+import {getCurrentUser} from "../../../services/auth/AuthenticationService";
 
 interface IChangeProfile {
 
@@ -25,7 +24,7 @@ const ChangeProfile: React.FC<IChangeProfile> = (props:IChangeProfile) => {
     }
   });
 
-  const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
+  const { errors, touched, handleSubmit, getFieldProps } = formik;
 
   return (
     <Card>

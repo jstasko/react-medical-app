@@ -2,8 +2,8 @@ import React, {useEffect} from "react";
 import {Box, Container, Stack, Typography} from "@mui/material";
 import Email from "./component/profile/ChangeProfile";
 import ChangePassword from "./component/profile/ChangePassword";
-import {getUser, updatePassword} from "../services/UserService";
-import {getCurrentUser} from "../services/AuthenticationService";
+import {getUser, updatePassword} from "../services/auth/UserService";
+import {getCurrentUser} from "../services/auth/AuthenticationService";
 import ImageCard from "./component/profile/ImageCard";
 
 const Profile: React.FC = () => {
@@ -39,7 +39,6 @@ const Profile: React.FC = () => {
       setMessage("")
     }, 1000)
   }
-
   return (
     <Container maxWidth="xl">
       {message && (

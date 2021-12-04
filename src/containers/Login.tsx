@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {login} from "../services/AuthenticationService";
+import {login} from "../services/auth/AuthenticationService";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import LoginForm from "./component/auth/LoginForm";
 import {Box, Container, Link, Stack, Typography} from "@mui/material";

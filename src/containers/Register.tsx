@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {Link as RouterLink, useNavigate} from "react-router-dom";
 import {IUser} from "../entities/User";
-import {register} from "../services/AuthenticationService";
+import {register} from "../services/auth/AuthenticationService";
 import RegisterForm from "./component/auth/RegisterForm";
 import {Box, Container, Link, Typography} from "@mui/material";
 import {ContentStyle, RootStyle, SectionStyle} from "../layouts/ComponentStyle";
