@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {getPlayer} from "../../services/players/PlayersService";
 import {getPlayerAddress} from "../../services/AddressService";
-import Edit from "../edit/Edit";
+import Edit from "./edit/Edit";
 
 const PlayerEdit: React.FC = () => {
   return (

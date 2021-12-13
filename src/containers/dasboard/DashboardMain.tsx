@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import DashboardSideBar from "./DashboardSideBar";
-import { Outlet } from 'react-router-dom';
+import {Outlet, useNavigate} from 'react-router-dom';
+import {getCurrentUser} from "../../services/auth/AuthenticationService";
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 92;
@@ -29,6 +30,11 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 const DashboardMain: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  if (getCurrentUser() === null) {
+    navigate('/login')
+  }
 
   return (
     <RootStyle>

@@ -17,8 +17,13 @@ const PlayersOperations: React.FC = () => {
 
   const getProp = async () => {
     const result = await propapiblities(params.id as string);
-    setProp(result.data.data[0].PRAVDEPODOBNOSTZRANENIA)
-    setCount(result.data.data[0].POCET_OPERACII)
+    if (result.data.data[0]) {
+      setProp(result.data.data[0].PRAVDEPODOBNOSTZRANENIA)
+    }
+    if (result.data.data[0]) {
+      setCount(result.data.data[0].POCET_OPERACII)
+    }
+
   }
 
   const operations = (page, size) => {
