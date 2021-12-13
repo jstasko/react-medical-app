@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
-import {IAddress} from "../../entities/IAddress";
+import {IAddress} from "../../../entities/IAddress";
 import {Link as RouterLink, useParams} from "react-router-dom";
 import {Box, Button, Container, Icon, Stack, Typography} from "@mui/material";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import EntityInfo from "./EntityInfo";
-import Address from "../addresses/Address";
+import Address from "../../addresses/Address";
 import {AxiosResponse} from "axios";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 

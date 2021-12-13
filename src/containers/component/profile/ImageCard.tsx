@@ -27,12 +27,14 @@ const BorderLinearProgress = styled(LinearProgress)(() => ({
 }));
 
 interface ICard {
-  profile?:{
+  profile:{
+    id?: string
     avatar: IImage;
   }
   setMessage: (message: string) => void;
   setError: (error: boolean) => void;
   setProfile: () => void;
+  baseUrl: string;
 }
 
 const ImageCard: React.FC<ICard> = (props: ICard) => {
@@ -43,10 +45,9 @@ const ImageCard: React.FC<ICard> = (props: ICard) => {
   }
   const upload = () => {
     setProgress(0);
-
     updateAvatar(currentFile, (event) => {
       setProgress(Math.round((100 * event.loaded)/event.total))
-    }).then((response) => {
+    }, props.baseUrl, props.profile.id ?? undefined).then((response) => {
       if (response.data) {
         props.setError(false)
         props.setMessage("File was uploaded")

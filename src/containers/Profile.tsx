@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import {Box, Container, Stack, Typography} from "@mui/material";
 import Email from "./component/profile/ChangeProfile";
 import ChangePassword from "./component/profile/ChangePassword";
-import {getUser, updatePassword} from "../services/auth/UserService";
+import {API_USER_URL, getUser, updatePassword} from "../services/auth/UserService";
 import {getCurrentUser} from "../services/auth/AuthenticationService";
 import ImageCard from "./component/profile/ImageCard";
 
@@ -67,7 +67,7 @@ const Profile: React.FC = () => {
 
       {
         profile  && (
-          <ImageCard profile={profile} setError={setError} setMessage={setMessage} setProfile={getProfile} />
+          <ImageCard profile={profile} setError={setError} setMessage={setMessage} setProfile={getProfile} baseUrl={API_USER_URL}/>
         )
       }
     </Container>

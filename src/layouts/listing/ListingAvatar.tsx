@@ -16,8 +16,12 @@ const ListingAvatar: React.FC<IListingAvatar> = (props: IListingAvatar) => {
   }, []);
 
   const getUrl = async () => {
-    const res = await getImage(props.url)
-    setImage(`data:${res.headers['content-type']};base64,${res.data}`)
+    if (props.url) {
+      const res = await getImage(props.url)
+      setImage(`data:${res.headers['content-type']};base64,${res.data}`)
+    } else {
+      setImage("");
+    }
   }
 
   return (

@@ -55,7 +55,7 @@ const MyListingBody: React.FC<IListingBody> = (props: IListingBody) => {
     const d = moment(value, 'YYYY-MM-DD');
     return d.date() + '/' + d.month() + '/' + d.year()
   }
-
+  console.log(props.entities)
   const emptyRows = props.page > 0 ? Math.max(0, (1 + props.page) * props.rowsPerPage - props.totalRows) : 0;
   return (
     <Card>
@@ -85,7 +85,7 @@ const MyListingBody: React.FC<IListingBody> = (props: IListingBody) => {
                     <TableCell align="left">{index}</TableCell>
                     {
                       props.images && (
-                        <ListingAvatar url={row.image} />
+                        <ListingAvatar url={row.avatar ? row.avatar.fileDownloadUri : ""} />
                       )
                     }
                     {props.headLabel.map((label: ITableHead) => {

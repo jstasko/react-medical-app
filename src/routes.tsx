@@ -17,27 +17,39 @@ import Specializations from "./containers/specializations/Specializations";
 import Cards from "./containers/cards/Cards";
 import Count from "./containers/players/Count";
 import Aphotecaries from "./containers/aphotecary/Aphotecaries";
+import DoctorsRanking from "./containers/doctors/DoctorsRanking";
+import {getCurrentUser} from "./services/auth/AuthenticationService";
+import DoctorEdit from "./containers/doctors/DoctorEdit";
 
 export default function Router() {
+
+  const user = getCurrentUser();
+
+  const childrens = [
+    { element: <Navigate to="/dashboard/app" replace /> },
+    { path: 'app', element: <Dashboard /> },
+    { path: 'profile', element: <Profile /> },
+    { path: 'players', element: <Players />},
+    { path: 'players/count', element: <Count />},
+    { path: 'players/:id/operations', element: <PlayersOperations /> },
+    { path: 'players/:id/sickness', element: <PlayersSickness /> },
+    { path: 'players/:id/medications', element: <PlayersMedication /> },
+    { path: 'players/:id/edit', element: <PlayerEdit /> },
+    { path: 'players/:id/json', element: <PlayersJson /> },
+    { path: 'doctors', element: <Doctors /> },
+    { path: 'doctors/ranking', element: <DoctorsRanking /> },
+    { path: 'doctors/:id/edit', element: <DoctorEdit /> },
+    { path: 'records', element: <Records /> },
+    { path: 'specializations', element: <Specializations /> },
+    { path: 'cards', element: <Cards /> },
+    { path: 'aphotecary', element: <Aphotecaries /> },
+  ]
+
   return useRoutes([
     {path: '/dashboard',
       element: <DashboardMain />,
-      children: [
-        { element: <Navigate to="/dashboard/app" replace /> },
-        { path: 'app', element: <Dashboard /> },
-        { path: 'profile', element: <Profile /> },
-        { path: 'players', element: <Players />},
-        { path: 'players/count', element: <Count />},
-        { path: 'players/:id/operations', element: <PlayersOperations /> },
-        { path: 'players/:id/sickness', element: <PlayersSickness /> },
-        { path: 'players/:id/medications', element: <PlayersMedication /> },
-        { path: 'players/:id/edit', element: <PlayerEdit /> },
-        { path: 'players/:id/json', element: <PlayersJson /> },
-        { path: 'doctors', element: <Doctors /> },
-        { path: 'records', element: <Records /> },
-        { path: 'specializations', element: <Specializations /> },
-        { path: 'cards', element: <Cards /> },
-        { path: 'aphotecary', element: <Aphotecaries /> },
+      children: user ? childrens : [
+        { path: '*' , element: <Navigate to="/login" /> },
       ]
     },
     {path: '/', element: <Navigate to="/dashboard" />},

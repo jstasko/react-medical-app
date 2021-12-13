@@ -2,21 +2,24 @@ import axios from "axios";
 import authHeader from "./AuthHeaders";
 import {getCurrentUser} from "./AuthenticationService";
 
-const API_URL = "http://localhost:8069/api/users/";
+export const API_USER_URL = "http://localhost:8069/api/users/";
 
 export const getUser = (email) => {
-  return axios.get(API_URL + `email/${email}`, { headers: authHeader() })
+  return axios.get(API_USER_URL + `email/${email}`, { headers: authHeader() })
 };
 
-export const updateAvatar = (file, onUploadProgress) => {
-  const user = getCurrentUser();
+export const updateAvatar = (file, onUploadProgress, baseUrl, id?: string) => {
   let formData = new FormData();
-
-  formData.append('email', user.email)
+  const user = getCurrentUser();
+  if (id) {
+    formData.append('id', id)
+  } else {
+    formData.append('email', user.email)
+  }
   formData.append('replace', 'true')
   formData.append('file', file)
 
-  return axios.post(API_URL + "avatar", formData, {
+  return axios.post(baseUrl + "avatar", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
       "Authorization": `Bearer ${user.accessToken}`,
@@ -27,7 +30,7 @@ export const updateAvatar = (file, onUploadProgress) => {
 
 export const updatePassword = (password: string) => {
   const user = getCurrentUser();
-  return axios.post(API_URL + `password/${user.email}`, {
+  return axios.post(API_USER_URL + `password/${user.email}`, {
     password
   }, {headers: authHeader()})
 }

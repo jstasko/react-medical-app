@@ -3,6 +3,7 @@ import {IButtonsArray} from "../../layouts/listing/ListHeader";
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import {Icon} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
+import StarIcon from '@mui/icons-material/Star';
 
 const getIcon = (name) => <Icon component={name} width={22} height={22}/>;
 
@@ -15,9 +16,9 @@ export const head: ITableHead[] = [
 
 export const buttons: IButtonsArray[] = [
   {
-    title: 'Add',
-    pathTo: '/profile',
-    icon: getIcon(AddIcon)
+    title: 'Ranking',
+    pathTo: '/dashboard/doctors/ranking',
+    icon: getIcon(StarIcon)
   }
 ]
 
